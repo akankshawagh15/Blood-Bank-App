@@ -1,4 +1,4 @@
-# MERN Blood Bank System
+#  Blood Bank System
 
 A Blood Bank System built using the MERN stack (MongoDB, Express.js, React, Node.js) to manage and organize blood donation data efficiently. This system allows users to register as donors, search for blood donors, and facilitates the overall management of blood donation activities.
 
