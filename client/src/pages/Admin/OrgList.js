@@ -5,11 +5,16 @@ import API from "../../services/API";
 
 const OrgList = () => {
   const [data, setData] = useState([]);
-  //find donar records
-  const getDonars = async () => {
+  const [editingId, setEditingId] = useState(null);
+  const [editedData, setEditedData] = useState({
+    organisationName: "",
+    email: "",
+    phone: "",
+  });
+
+  const getOrgs = async () => {
     try {
       const { data } = await API.get("/admin/org-list");
-      console.log(data);
       if (data?.success) {
         setData(data?.orgData);
       }
@@ -18,19 +23,36 @@ const OrgList = () => {
     }
   };
 
-  useEffect(() => {
-    getDonars();
-  }, []);
+  const handleEdit = (record) => {
+    setEditingId(record._id);
+    setEditedData({
+      organisationName: record.organisationName,
+      email: record.email,
+      phone: record.phone,
+    });
+  };
 
-  //DELETE FUNCTION
+  const handleSave = async () => {
+    try {
+      const { data } = await API.put(`/admin/update-org/${editingId}`, {
+        ...editedData,
+      });
+      alert(data?.message);
+      setEditingId(null);
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handelDelete = async (id) => {
     try {
       let answer = window.prompt(
-        "Are You SUre Want To Delete This Organisation",
+        "Are You Sure Want To Delete This Organisation",
         "Sure"
       );
       if (!answer) return;
-      const { data } = await API.delete(`/admin/delete-donar/${id}`);
+      const { data } = await API.delete(`/admin/delete-org/${id}`);
       alert(data?.message);
       window.location.reload();
     } catch (error) {
@@ -38,9 +60,13 @@ const OrgList = () => {
     }
   };
 
+  useEffect(() => {
+    getOrgs();
+  }, []);
+
   return (
     <Layout>
-      <table className="table ">
+      <table className="table">
         <thead>
           <tr>
             <th scope="col">Name</th>
@@ -53,17 +79,70 @@ const OrgList = () => {
         <tbody>
           {data?.map((record) => (
             <tr key={record._id}>
-              <td>{record.organisationName}</td>
-              <td>{record.email}</td>
-              <td>{record.phone}</td>
+              <td>
+                {editingId === record._id ? (
+                  <input
+                    type="text"
+                    value={editedData.organisationName}
+                    onChange={(e) =>
+                      setEditedData({
+                        ...editedData,
+                        organisationName: e.target.value,
+                      })
+                    }
+                  />
+                ) : (
+                  record.organisationName
+                )}
+              </td>
+              <td>
+                {editingId === record._id ? (
+                  <input
+                    type="text"
+                    value={editedData.email}
+                    onChange={(e) =>
+                      setEditedData({ ...editedData, email: e.target.value })
+                    }
+                  />
+                ) : (
+                  record.email
+                )}
+              </td>
+              <td>
+                {editingId === record._id ? (
+                  <input
+                    type="text"
+                    value={editedData.phone}
+                    onChange={(e) =>
+                      setEditedData({ ...editedData, phone: e.target.value })
+                    }
+                  />
+                ) : (
+                  record.phone
+                )}
+              </td>
               <td>{moment(record.createdAt).format("DD/MM/YYYY hh:mm A")}</td>
               <td>
-                <button
-                  className="btn btn-danger"
-                  onClick={() => handelDelete(record._id)}
-                >
-                  Delete
-                </button>
+                {editingId === record._id ? (
+                  <button className="btn btn-success" onClick={handleSave}>
+                    Save
+                  </button>
+                ) : (
+                  <>
+                    <button
+                      className="btn btn-primary"
+                      onClick={() => handleEdit(record)}
+                    >
+                      Edit
+                    </button>{" "}
+                    <button
+                      className="btn btn-danger"
+                      onClick={() => handelDelete(record._id)}
+                    >
+                      Delete
+                    </button>
+                  </>
+                )}
               </td>
             </tr>
           ))}

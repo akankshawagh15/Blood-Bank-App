@@ -5,31 +5,41 @@ const {
   getHospitalListController,
   getOrgListController,
   deleteDonarController,
+  updateDonarController, // Add this line
 } = require("../controllers/adminController");
 const adminMiddleware = require("../middlewares/adminMiddleware");
 
-//router object
+// router object
 const router = express.Router();
 
-//Routes
+// Routes
 
-//GET || DONAR LIST
+// GET || DONAR LIST
 router.get(
   "/donar-list",
   authMiddelware,
   adminMiddleware,
   getDonarsListController
 );
-//GET || HOSPITAL LIST
+
+// GET || HOSPITAL LIST
 router.get(
   "/hospital-list",
   authMiddelware,
   adminMiddleware,
   getHospitalListController
 );
-//GET || ORG LIST
+
+// GET || ORG LIST
 router.get("/org-list", authMiddelware, adminMiddleware, getOrgListController);
-// ==========================
+
+// UPDATE DONAR || PUT
+router.put(
+  "/update-donar/:id",
+  authMiddelware,
+  adminMiddleware,
+  updateDonarController
+);
 
 // DELETE DONAR || GET
 router.delete(
@@ -39,5 +49,5 @@ router.delete(
   deleteDonarController
 );
 
-//EXPORT
+// EXPORT
 module.exports = router;
