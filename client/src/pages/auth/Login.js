@@ -2,11 +2,14 @@ import React from "react";
 import Form from "../../components/shared/Form/Form";
 import { useSelector } from "react-redux";
 import Spinner from "./../../components/shared/Spinner";
+import HomeHeader from "../../components/shared/Layout/HomeHeader";
 
 const Login = () => {
   const { loading, error } = useSelector((state) => state.auth);
   return (
     <>
+
+    <HomeHeader/>
       {error && <span>{alert(error)}</span>}
       {loading ? (
         <Spinner />

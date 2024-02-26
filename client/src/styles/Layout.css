@@ -36,3 +36,111 @@
 .active i {
   color: #2e3200;
 }
+
+/*Home page*/
+
+.homediv {
+  background-color: #eb4533;
+  height: 300px;
+  color: white;
+  text-shadow: 1px 1px black; 
+  text-decoration-color: aquamarine;
+  
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+}
+.boxed-text {
+  border: 1px solid #ccc; /* Border style */
+  padding: 10px; /* Padding around the text */
+  border-radius: 5px; /* Rounded corners */
+}
+
+.homequt {
+  color: greenyellow;
+  text-align: center;
+  text-decoration: underline;
+}
+
+.getstart {
+  border: 2px solid #2e3200; /* Added solid border style */
+  background-color: black;
+  color: wheat;
+  border-radius: 20%;
+  padding: 10px 20px; /* Added padding for better appearance */
+  align-items: center;
+}
+
+.getstart-container {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+}
+
+.homequttext {
+  color: black;
+  text-align: left;
+  font-size: 1.1rem;
+  
+}
+
+.uscontainer{
+  background-color: black;
+  text-align: center;
+  color: gold;
+}
+
+.containerh1{
+  color: white;
+}
+
+
+.card {
+  border: 1px solid rgba(0, 0, 0, 0.125); 
+  border-radius: 0.25rem; 
+  margin-bottom: 20px; 
+  box-shadow: 0 4px 6px rgba(63, 150, 39, 0.1); 
+}
+
+.card-title {
+  font-size: 1.25rem; /* Title font size */
+}
+
+.card-text {
+  font-size: 1rem; /* Text font size */
+}
+
+.btn {
+  margin-top: 10px; /* Margin top for button spacing */
+}
+
+
+/* Contactus.css */
+
+.img-container {
+  position: relative; /* Make the container relative to allow absolute positioning */
+  width: 200vh; /* Set the width of the container */
+  height: 90vh; /* Set the height of the container */
+}
+
+.img-container img {
+  width: 100%; 
+  height: 100%; 
+  object-fit: cover; 
+}
+
+.text-overlay {
+  position: absolute; 
+  top: 50%; 
+  left: 60%; 
+  transform: translate(-50%, -50%); 
+  
+}
+
+.text-overlay h3 {
+  font-size: 2.5rem; 
+  color: black;
+}
+
+.text-overlay p {
+  font-size: 1.5rem; 
+  color: black;
+}

@@ -22,6 +22,7 @@ const getDonarsListController = async (req, res) => {
     });
   }
 };
+
 //GET HOSPITAL LIST
 const getHospitalListController = async (req, res) => {
   try {
@@ -31,8 +32,8 @@ const getHospitalListController = async (req, res) => {
 
     return res.status(200).send({
       success: true,
-      Toatlcount: hospitalData.length,
-      message: "HOSPITAL List Fetched Successfully",
+      Totalcount: hospitalData.length,
+      message: "Hospital List Fetched Successfully",
       hospitalData,
     });
   } catch (error) {
@@ -44,6 +45,7 @@ const getHospitalListController = async (req, res) => {
     });
   }
 };
+
 //GET ORG LIST
 const getOrgListController = async (req, res) => {
   try {
@@ -53,7 +55,7 @@ const getOrgListController = async (req, res) => {
 
     return res.status(200).send({
       success: true,
-      Toatlcount: orgData.length,
+      Totalcount: orgData.length,
       message: "ORG List Fetched Successfully",
       orgData,
     });
@@ -66,7 +68,6 @@ const getOrgListController = async (req, res) => {
     });
   }
 };
-// =======================================
 
 //DELETE DONAR
 const deleteDonarController = async (req, res) => {
@@ -121,11 +122,116 @@ const updateDonarController = async (req, res) => {
   }
 };
 
-// Add this function to the exports
+//DELETE HOSPITAL
+const deleteHospitalController = async (req, res) => {
+  try {
+    await userModel.findByIdAndDelete(req.params.id);
+    return res.status(200).send({
+      success: true,
+      message: "Hospital Record Deleted successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({
+      success: false,
+      message: "Error while deleting hospital",
+      error,
+    });
+  }
+};
+
+// UPDATE HOSPITAL DETAILS
+const updateHospitalController = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updateData = req.body;
+
+    const existingHospital = await userModel.findById(id);
+    if (!existingHospital || existingHospital.role !== "hospital") {
+      return res.status(404).send({
+        success: false,
+        message: "Hospital not found",
+      });
+    }
+
+    const updatedHospital = await userModel.findByIdAndUpdate(id, updateData, {
+      new: true,
+    });
+
+    return res.status(200).send({
+      success: true,
+      message: "Hospital details updated successfully",
+      updatedHospital,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({
+      success: false,
+      message: "Error while updating hospital details",
+      error,
+    });
+  }
+};
+
+//DELETE ORGANIZATION
+const deleteOrgController = async (req, res) => {
+  try {
+    await userModel.findByIdAndDelete(req.params.id);
+    return res.status(200).send({
+      success: true,
+      message: "Organization Record Deleted successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({
+      success: false,
+      message: "Error while deleting organization",
+      error,
+    });
+  }
+};
+
+// UPDATE ORGANIZATION DETAILS
+const updateOrgController = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updateData = req.body;
+
+    const existingOrg = await userModel.findById(id);
+    if (!existingOrg || existingOrg.role !== "organisation") {
+      return res.status(404).send({
+        success: false,
+        message: "Organization not found",
+      });
+    }
+
+    const updatedOrg = await userModel.findByIdAndUpdate(id, updateData, {
+      new: true,
+    });
+
+    return res.status(200).send({
+      success: true,
+      message: "Organization details updated successfully",
+      updatedOrg,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({
+      success: false,
+      message: "Error while updating organization details",
+      error,
+    });
+  }
+};
+
 module.exports = {
   getDonarsListController,
   getHospitalListController,
   getOrgListController,
   deleteDonarController,
-  updateDonarController, // Add this line
+  updateDonarController,
+  deleteHospitalController,
+  updateHospitalController,
+  deleteOrgController,
+  updateOrgController,
 };

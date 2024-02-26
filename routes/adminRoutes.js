@@ -5,7 +5,11 @@ const {
   getHospitalListController,
   getOrgListController,
   deleteDonarController,
-  updateDonarController, // Add this line
+  updateDonarController,
+  deleteHospitalController, 
+  updateHospitalController, 
+  deleteOrgController, 
+  updateOrgController, 
 } = require("../controllers/adminController");
 const adminMiddleware = require("../middlewares/adminMiddleware");
 
@@ -47,6 +51,38 @@ router.delete(
   authMiddelware,
   adminMiddleware,
   deleteDonarController
+);
+
+// DELETE HOSPITAL || GET
+router.delete(
+  "/delete-hospital/:id",
+  authMiddelware,
+  adminMiddleware,
+  deleteHospitalController
+);
+
+// UPDATE HOSPITAL || PUT
+router.put(
+  "/update-hospital/:id",
+  authMiddelware,
+  adminMiddleware,
+  updateHospitalController
+);
+
+// DELETE ORG || GET
+router.delete(
+  "/delete-org/:id",
+  authMiddelware,
+  adminMiddleware,
+  deleteOrgController
+);
+
+// UPDATE ORG || PUT
+router.put(
+  "/update-org/:id",
+  authMiddelware,
+  adminMiddleware,
+  updateOrgController
 );
 
 // EXPORT
